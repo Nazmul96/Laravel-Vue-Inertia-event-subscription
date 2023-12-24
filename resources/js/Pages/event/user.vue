@@ -87,7 +87,7 @@
   }
   
   function handleEvents(events) {
-    //currentEvents.value = events;
+    currentEvents.value = events;
   }
 
   function saveEventRegister(selectInfo){
@@ -111,7 +111,10 @@
       <ul>
         <li v-for="(error, key) in eventRegister.errors" :key="key" class="text-danger">{{ error }}</li>
       </ul>
-    </div>
+  </div>
+  <div v-if="$page.props.flash.message" class="success-messages mt-5" align="center">
+      <h2 class="text-success">{{ $page.props.flash.message }}</h2>
+  </div>
 <div v-if="open" class="modal_data">
 
      <div class="event_name">

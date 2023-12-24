@@ -85,7 +85,7 @@
   }
   
   function handleEvents(events) {
-    //currentEvents.value = events;
+    currentEvents.value = events;
   }
 
   function saveEvent(selectInfo){
@@ -106,7 +106,9 @@
 </script>
 
 <template>
-
+ <div v-if="$page.props.flash.message" class="success-messages mt-5" align="center">
+      <h2 class="text-success">{{ $page.props.flash.message }}</h2>
+  </div>
   <div v-if="eventData.hasErrors" class="error-messages" align="center">
       <ul>
         <li v-for="(error, key) in eventData.errors" :key="key" class="text-danger">{{ error }}</li>
