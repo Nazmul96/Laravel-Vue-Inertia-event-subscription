@@ -18,33 +18,20 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+   
+// });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
-    Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
-    Route::post('/employee/store', [EmployeeController::class, 'store'])->name('employee.store');
-    Route::get('/employee/{id}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
-    Route::delete('/employee/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
-});
-
-Route::get('/events', [EventController::class, 'index'])->name('employees');
-Route::post('/events', [EventController::class, 'store'])->name('event.store');
+//simple calendar event subscription app all route--------
+Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
 Route::post('/event/registration', [EventController::class, 'eventRegistration'])->name('event.registration');
+Route::get('/admin', [EventController::class, 'admin'])->name('admin');
+Route::get('/', [EventController::class, 'user'])->name('user');
 
 require __DIR__.'/auth.php';
