@@ -6,14 +6,7 @@
   import timeGridPlugin from '@fullcalendar/timegrid';
   import interactionPlugin from '@fullcalendar/interaction';
   import { INITIAL_EVENTS, createEventId } from '../../event-utils';
-  import {Head,useForm,usePage} from '@inertiajs/vue3';
-
-  const options = { timeZone: 'Asia/Dhaka',year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit' };
+  import {Head,useForm,usePage,router} from '@inertiajs/vue3';
 
 
   const props = defineProps({
@@ -23,11 +16,11 @@
     },
   });
   const eventData =useForm({
-      name:"",
+      name:'',
       start_date:'', 
       end_date:'', 
   })
-
+  console.log(props.all_events);
 
   let open = ref(false)
   const calendarOptions = ref({
@@ -62,9 +55,11 @@
   function handleDateSelect(selectInfo) {
     
     open.value = true;
+
+    eventData.start_date = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+;
     let title = eventData.name;
     let calendarApi = selectInfo.view.calendar;
-  
     calendarApi.unselect(); // clear date selection
 
     if (title) {
@@ -96,9 +91,7 @@
       eventData.post(`/event/store`,{
         preserveScroll:true,
         onSuccess: () => {
-            toast.add({
-                message: 'Employee Created!'
-            });
+          window.location.reload();
         }
     })
   }
@@ -106,6 +99,7 @@
 </script>
 
 <template>
+
  <div v-if="$page.props.flash.message" class="success-messages mt-5" align="center">
       <h2 class="text-success">{{ $page.props.flash.message }}</h2>
   </div>

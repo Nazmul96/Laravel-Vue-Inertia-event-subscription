@@ -51,7 +51,6 @@ class EventController extends Controller
 
     public function admin(){
         $all_events = $this->allEventGet();
-
         return Inertia::render('event/admin',['all_events'=>$all_events]);
     }
 
@@ -61,14 +60,13 @@ class EventController extends Controller
     }
 
     public function allEventGet(){
-        $events = Event::select('name','start_date','end_date')->get();
+        $events = Event::select('id','name','start_date','end_date')->get();
         foreach ($events as $key => $event) {
-
             $startDateTime = new DateTime($event['start_date']);
             $endDateTime   = new DateTime($event['end_date']);
         
             $all_events[] = [
-                'id' => $key + 1,
+                'id' => $event['id'],
                 'title' => $event['name'],
                 'start' => $startDateTime->format('Y-m-d') . 'T' . $startDateTime->format('H:i:s'),
                 'end' => $endDateTime->format('Y-m-d') . 'T' . $endDateTime->format('H:i:s'),
