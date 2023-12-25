@@ -20,15 +20,17 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             
             Log::info('Attempting to send email.');
-//now()->addMinutes(10)->format('Y-m-d H:i:00')
+
             $event_register = EventRegistration::whereHas('event', function ($query) {
-                $query->where('start_date','=','2023-12-24 00:35:00');
+                $query->where('start_date','=',now()->addMinutes(10)->format('Y-m-d H:i:00'));
             })->with('event')->get();
 
-            $event_register->each(function ($registration) {
-                dispatch(new SendEventEmailJob($registration));
-            });
-            
+            if($event_register->isNotEmpty()){
+                $event_register->each(function ($registration) {
+                    dispatch(new SendEventEmailJob($registration));
+                });    
+            }
+
             Log::info('Email sent successfully.');
             
        })->everyMinute();

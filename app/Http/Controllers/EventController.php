@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventRegisterRequest;
 use App\Jobs\SendEventEmailJob;
 use App\Models\Event;
 use App\Models\EventRegistration;
@@ -27,19 +28,15 @@ class EventController extends Controller
         ]);
 
         $event = new Event();
-        $event->name      = $request->name;  
+        $event->name       = $request->name;  
         $event->start_date = Carbon::parse($request->start_date)->second(0)->format('Y-m-d H:i:s');  
-        $event->end_date  = Carbon::parse($request->end_date)->second(0)->format('Y-m-d H:i:s');
+        $event->end_date   = Carbon::parse($request->end_date)->second(0)->format('Y-m-d H:i:s');
         $event->save();
         return redirect()->route('admin')->with('message', 'Event Created Successfully');
     }
 
-    public function eventRegistration(Request $request){
-        $request->validate([
-            'user_name'       => 'required|string',
-            'user_email'      => 'required|email'
-        ]);
-
+    public function eventRegistration(EventRegisterRequest $request){
+ 
         $registration = new EventRegistration();
         $registration->event_id   = $request->event_id;  
         $registration->user_name  = $request->user_name;  
