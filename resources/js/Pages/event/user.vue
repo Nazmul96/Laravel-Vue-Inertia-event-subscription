@@ -142,7 +142,7 @@
         <div class='demo-app-sidebar-section'>
           <h2>Instructions</h2>
           <ul>
-            <li>Select dates and you will be prompted to create a new event</li>
+            <li>Select event and you can signing up for this event</li>
           </ul>
         </div>
         <div class='demo-app-sidebar-section'>
