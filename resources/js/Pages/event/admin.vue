@@ -55,9 +55,7 @@
   function handleDateSelect(selectInfo) {
     
     open.value = true;
-
-    eventData.start_date = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
-;
+    eventData.start_date = new Date(selectInfo.startStr).toISOString().slice(0, 16);
     let title = eventData.name;
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
@@ -99,7 +97,6 @@
 </script>
 
 <template>
-
  <div v-if="$page.props.flash.message" class="success-messages mt-5" align="center">
       <h2 class="text-success">{{ $page.props.flash.message }}</h2>
   </div>

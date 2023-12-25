@@ -80,7 +80,10 @@
   }
   
   function handleEventClick(clickInfo) {
+  
       console.log(clickInfo.event);
+
+
       open.value = true;
       eventRegister.event_name = clickInfo.event.title;
       eventRegister.event_id   = 1;
