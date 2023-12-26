@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EventRegisterRequest extends FormRequest
 {
@@ -23,7 +24,13 @@ class EventRegisterRequest extends FormRequest
     {
         return [
             'user_name'       => 'required|string',
-            'user_email'      => 'required|email'
+            'user_email'      => [
+                'required',
+                'email',
+                Rule::unique('event_registrations', 'user_email')->where(function ($query) {
+                    $query->where('event_id', $this->input('event_id'));
+                }),
+            ]
         ];
     }
 }
